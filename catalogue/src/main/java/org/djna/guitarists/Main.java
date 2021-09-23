@@ -2,12 +2,14 @@ package org.djna.guitarists;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.djna.guitarists.data.Guitarist;
 import org.djna.guitarists.data.GuitaristList;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
+import java.util.Comparator;
 
 public class Main {
     static final String siteListUrl =  "http://localhost:8080/Guitarists.json";
@@ -22,7 +24,21 @@ public class Main {
                 .get(GuitaristList.class);
 
 
-        theLogger.info("Got {}", guitarists);
+        theLogger.debug("Got {}", guitarists);
+
+        guitarists.getGuitarists().sorted().forEach(
+                guitarist -> System.out.println(guitarist)
+        );
+
+        System.out.println("By name");
+        guitarists.getGuitarists().sorted(Comparator.comparing(Guitarist::getName)).forEach(
+                guitarist -> System.out.println(guitarist)
+        );
+
+        System.out.println("By name");
+        guitarists.getGuitarists().sorted(Comparator.comparingInt(Guitarist::getId)).forEach(
+                guitarist -> System.out.println(guitarist)
+        );
 
     }
 }	

@@ -1,6 +1,6 @@
 package org.djna.guitarists.data;
 
-public class Guitarist {
+public class Guitarist implements Comparable {
     private int id;
     private String name;
     private Object[] albums;
@@ -26,4 +26,12 @@ public class Guitarist {
     }
 
 
+    @Override
+    public int compareTo(Object o) {
+        if ( o == null || (! (o instanceof Guitarist))){
+            return 1;
+        }
+        Guitarist otherGuitarist = (Guitarist) o;
+        return getName().compareTo(otherGuitarist.getName());
+    }
 }
