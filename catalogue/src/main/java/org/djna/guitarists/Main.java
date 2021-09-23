@@ -2,6 +2,7 @@ package org.djna.guitarists;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.djna.guitarists.data.GuitaristList;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.client.Client;
@@ -16,12 +17,12 @@ public class Main {
         theLogger.info("Application Started");
 
         Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
-        Object got = client.target(siteListUrl)
+        GuitaristList guitarists = client.target(siteListUrl)
                 .request(MediaType.APPLICATION_JSON)
-                .get(Object.class);
+                .get(GuitaristList.class);
 
 
-        theLogger.info("Got {}", got);
+        theLogger.info("Got {}", guitarists);
 
     }
 }	
